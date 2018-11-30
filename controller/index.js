@@ -50,14 +50,18 @@ exports.signup = function(req, res){
                 }
         });
 		*/
-	var connection = dao.signup(uid, upw, uemail, unickname, function(error, result){
+	dao.signup(uid, upw, uemail, unickname, function(error, result){
 		if(error){
 			console.log(error);
+			res.json({
+				RESULT : "0"
+			});
+		} else {
+			res.json({
+				RESULT : "1"
+			})
 		}
-			console.log(connection);
 	});
-
-	res.redirect('/');
 };
 
 
