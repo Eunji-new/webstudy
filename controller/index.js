@@ -1,83 +1,60 @@
 var dao = require('../dao/index.js');
 var async = require('async');
 
-
-
-exports.login = function(req, res) {
- 
+exports.login = function (req, res) {
 	var uid = req.body.id;
 	var upw = req.body.pw;
 
 	async.waterfall([
-		function(nextCallback){
-			dao.login(uid,upw,nextCallback);
+		function (nextCallback) {
+			dao.login(uid, upw, nextCallback);
 		}
-	], function(error, result){
-		if(error){
+	], function (error, result) {
+		if (error) {
 			console.log(error);
 			nextcallback("0");
 		}
-		else if(result.length == 0) {
-		       	nextcallback("2");
+		else if (result.length == 0) {
+			nextcallback("2");
 		}
-		else{
+		else {
 			nextcallback("1");
-		//	res.redirect('./main.html');
 		}
 	});
-
 };
 
-exports.signup = function(req, res){
+exports.signup = function (req, res) {
 	var uid = req.body.id;
 	var upw = req.body.pw;
 	var uemail = req.body.email;
 	var unickname = req.body.nickname;
 
-	/*    async.waterfall([
-                function(nextCallback){
-                        dao.signup(uid,upw,uemail, unickname, nextCallback);
-                }
-        ], function(error){
-                if(error){
-                        console.log(error);
-                        nextcallback("0");
-                }
-                else{
-		      console.log(res);
-                      nextcallback("1");
-		      res.redirect('/');
-                }
-        });
-		*/
-	dao.signup(uid, upw, uemail, unickname, function(error, result){
-		if(error){
+	dao.signup(uid, upw, uemail, unickname, function (error, result) {
+		if (error) {
 			console.log(error);
 			res.json({
-				RESULT : "0"
+				RESULT: "0"
 			});
 		} else {
 			res.json({
-				RESULT : "1"
+				RESULT: "1"
 			})
 		}
 	});
 };
 
 
-exports.getUserProfile = function(req, res) {
+exports.getUserProfile = function (req, res) {
 	var uid = req.param('id');
-	
-	dao.getUserProfile(uid, function(result){
+
+	dao.getUserProfile(uid, function (result) {
 		var count = 0;
 		var list = [];
-		
-	
-	res.json({
-	
-	   memlist : list
+
+		res.json({
+
+			memlist: list
+		});
+
 	});
-
-      });
 };
-
