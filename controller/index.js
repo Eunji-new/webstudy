@@ -5,6 +5,7 @@ exports.login = function (req, res) {
 	var uid = req.body.id;
 	var upw = req.body.pw;
 
+
 	async.waterfall([
 		function (nextCallback) {
 			dao.login(uid, upw, nextCallback);
@@ -12,16 +13,16 @@ exports.login = function (req, res) {
 	], function (error, result) {
 		if (error) {
 			console.log(error);
-			nextcallback("0");
 		}
-		else if (result.length == 0) {
-			nextcallback("2");
+		else if(result.length == 0){	
+			res.send('<script>alert("id or passwd is wrong");</script>');
+		}	
+		else{
+			res.render("./main.html");
 		}
-		else {
-			nextcallback("1");
-		}
-	});
-};
+});
+}
+
 
 exports.signup = function (req, res) {
 	var uid = req.body.id;
